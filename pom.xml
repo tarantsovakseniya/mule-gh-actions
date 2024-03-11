@@ -15,10 +15,24 @@
 
 		<app.runtime>4.5.2</app.runtime>
 		<mule.maven.plugin.version>4.0.0</mule.maven.plugin.version>
+		<tags />
+		<categories>[]</categories>
+		<maven.release.plugin.version>3.0.4</maven.release.plugin.version>
+		<project.scm.id>github</project.scm.id>
 	</properties>
-
+    <scm>
+		<connection>scm:git:https://github.com/tarantsovakseniya/mule-gh-actions.git</connection>
+		<url>scm:git:https://github.com/tarantsovakseniya/mule-gh-actions.git</url>
+    	<developerConnection>scm:git:https://github.com/tarantsovakseniya/mule-gh-actions.git</developerConnection>
+    	<tag>HEAD</tag>
+    </scm>	
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
@@ -29,6 +43,28 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+				<configuration>
+					<cloudHubDeployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<muleVersion>${mule.version}</muleVersion>
+		                <connectedAppClientId>${conn.app.client.id}</connectedAppClientId>
+		                <connectedAppClientSecret>${conn.app.client.secret}</connectedAppClientSecret>
+		                <connectedAppGrantType>client_credentials</connectedAppGrantType>
+						<applicationName>${project.artifactId}</applicationName>
+						<environment>${cloudhub.environment}</environment>
+						<workerType>${cloudhub.workerType}</workerType>
+						<workers>${cloudhub.workers}</workers>
+						<region>${cloudhub.region}</region>
+						<objectStoreV2>true</objectStoreV2>
+						<properties>
+							<maven.compiler.source>1.8</maven.compiler.source>
+							<maven.compiler.target>1.8</maven.compiler.target>
+							<mule.env>${cloudhub.environment}</mule.env>
+<!-- 						<mule.encryption.key>${mule.encryption.key}</mule.encryption.key> -->
+						</properties>
+					</cloudHubDeployment>
+					<classifier>mule-application</classifier>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -63,16 +99,12 @@
 		</repository>
 	</repositories>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>mulesoft-releases</id>
-			<name>MuleSoft Releases Repository</name>
-			<layout>default</layout>
-			<url>https://repository.mulesoft.org/releases/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>github</name>
+			<url>https://maven.pkg.github.com/tarantsovakseniya/mule-gh-actions</url>  
+		</repository>
+	</distributionManagement>
 
 </project>
