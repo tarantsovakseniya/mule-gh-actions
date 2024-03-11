@@ -15,6 +15,7 @@
 
 		<app.runtime>4.5.2</app.runtime>
 		<mule.maven.plugin.version>4.0.0</mule.maven.plugin.version>
+		<mule.version>4.5</mule.version>
 		<tags />
 		<categories>[]</categories>
 		<maven.release.plugin.version>3.0.4</maven.release.plugin.version>
