@@ -17,6 +17,9 @@ jobs:
           CLOUDHUB_REGION: "us-east-2"
           CLOUDHUB_ID: ${{ secrets.CLOUDHUB_ID }}
           CLOUDHUB_SECRET: ${{ secrets.CLOUDHUB_SECRET }}
+        permissions:
+          packages: write
+          contents: write
         #Runner
         runs-on: ubuntu-latest
         steps:
