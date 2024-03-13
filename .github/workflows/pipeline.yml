@@ -45,17 +45,6 @@ jobs:
             - name: Build the jar
               run: mvn package -DskipTests   
 
-            # Deploy to CloudHub
-            - name: Deploy             
-              run: |
-                mvn -U -V -e -B -DskipTests deploy --file pom.xml -DmuleDeploy \
-                -Dconn.app.client.id=${{ env.CLOUDHUB_ID}} \
-                -Dconn.app.client.secret=${{ env.CLOUDHUB_SECRET}} \
-                -Dcloudhub.environment=${{ env.CLOUDHUB_ENVIRONMENT}} \
-                -Dcloudhub.workerType=${{ env.CLOUDHUB_WORKER_TYPE}} \
-                -Dcloudhub.workers=${{ env.CLOUDHUB_WORKERS}} \
-                -Dcloudhub.region=${{ env.CLOUDHUB_REGION}} \
-
             # # Configure user for the next step
             - name: Configure Git user
               run: |
@@ -69,3 +58,14 @@ jobs:
               run: mvn -B release:prepare release:perform
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            # Deploy to CloudHub
+            - name: Deploy             
+              run: |
+                mvn -U -V -e -B -DskipTests deploy --file pom.xml -DmuleDeploy \
+                -Dconn.app.client.id=${{ env.CLOUDHUB_ID}} \
+                -Dconn.app.client.secret=${{ env.CLOUDHUB_SECRET}} \
+                -Dcloudhub.environment=${{ env.CLOUDHUB_ENVIRONMENT}} \
+                -Dcloudhub.workerType=${{ env.CLOUDHUB_WORKER_TYPE}} \
+                -Dcloudhub.workers=${{ env.CLOUDHUB_WORKERS}} \
+                -Dcloudhub.region=${{ env.CLOUDHUB_REGION}} \
