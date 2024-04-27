@@ -48,11 +48,14 @@ jobs:
                 JF_USER: ${{ secrets.JFROG_USER }}
                 JF_PASSWORD: ${{ secrets.JFROG_PASSWORD }}
 
-            # Configure Maven settings
-            - name: JFrog Maven Configuration
-              run: |
+            # Configure JFrog server
+            - name: Config JFrog Server
+              run: |  
+                jf c add jfrog
+                jf -v
                 jf mvn-config --repo-deploy-releases mule-libs-release-local \
-                              --repo-deploy-snapshots mule-libs-snapshot-local
+                              --repo-deploy-snapshots mule-libs-snapshot-local \
+                              --server-id-deploy jfrog
 
             # Set build variables                 
             - name: Set build variables
