@@ -99,6 +99,7 @@ jobs:
 
             # Deploy to CloudHub
             - name: Deploy             
+              continue-on-error: true
               run: |
                 mvn -U -V -e -B -DskipTests deploy --file pom.xml -DmuleDeploy \
                 -Dconn.app.client.id=${{ env.CLOUDHUB_ID}} \
