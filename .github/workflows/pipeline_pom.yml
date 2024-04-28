@@ -42,6 +42,13 @@ jobs:
                 #Cache dependencies to speed up workflow runs.
                 cache: maven
 
+            # Maven Configuration
+            - name: Maven Config
+              uses: s4u/maven-settings-action@v2.6.0
+              with:
+                servers: '[{"id": "central", "username": "${{ secrets.JFROG_USER }}", "password": "${{ secrets.JFROG_PASSWORD }}"} \
+                           {"id": "snapshots", "username": "${{ secrets.JFROG_USER }}", "password": "${{ secrets.JFROG_PASSWORD }}"}]'
+          
             # Run the tests
             - name: Test the compiled source code
               run: mvn clean test
