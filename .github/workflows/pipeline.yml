@@ -81,7 +81,7 @@ jobs:
             # Deploy the jar to GitHub registry
             # Build next snapshot version.
             - name: Prepare and perform release            
-              if: ${{ env.CLOUDHUB_ENVIRONMENT != 'Production' }}
+              if: ${{ env.CLOUDHUB_ENVIRONMENT }} == 'Production'
               run: mvn -B release:prepare release:perform
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
