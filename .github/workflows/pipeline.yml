@@ -5,7 +5,13 @@ name: mulesoft-pipeline
 run-name: run by ${{ github.actor }}
 
 #Specifies the trigger for this workflow.
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+        release:
+            description: Release
+            required: true
+            default: 'false'
 
 jobs:
     #Custom name of the job.
@@ -81,7 +87,7 @@ jobs:
             # Deploy the jar to GitHub registry
             # Build next snapshot version.
             - name: Prepare and perform release            
-              if: ${{ env.CLOUDHUB_ENVIRONMENT }} == 'Production'
+              if: github.event.inputs.release == 'true'
               run: mvn -B release:prepare release:perform
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
