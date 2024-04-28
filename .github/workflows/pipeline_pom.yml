@@ -41,8 +41,6 @@ jobs:
                 java-version: '8'
                 #Cache dependencies to speed up workflow runs.
                 cache: maven
-                #Value of the distributionManagement/repository/id field of the pom.xml
-                server-id: github
 
             # Run the tests
             - name: Test the compiled source code

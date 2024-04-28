@@ -114,10 +114,15 @@
 
 	<distributionManagement>
 		<repository>
-			<id>github</id>
-			<name>github</name>
-			<url>https://maven.pkg.github.com/tarantsovakseniya/mule-gh-actions</url>  
+			<id>central</id>
+			<name>a0pgvplq6uut1-artifactory-primary-0-releases</name>
+			<url>https://ktorg.jfrog.io/artifactory/mule-libs-release-local</url>
 		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>a0pgvplq6uut1-artifactory-primary-0-snapshots</name>
+			<url>https://ktorg.jfrog.io/artifactory/mule-libs-snapshot</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 </project>
