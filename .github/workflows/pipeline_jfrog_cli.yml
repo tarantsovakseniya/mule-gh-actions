@@ -95,19 +95,24 @@ jobs:
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               
-            # Upload artifact
-            - name: Upload artifact to JFrog repository
-              run: |
-                jf mvn install -DskipTests -PjfrogDeploy
+            - run: |
+                cd target
+                ls
+            
+            
+            # # Upload artifact
+            # - name: Upload artifact to JFrog repository
+            #   run: |
+            #     jf mvn install -DskipTests -PjfrogDeploy
 
-            # Deploy to CloudHub
-            - name: Deploy             
-              continue-on-error: true
-              run: |
-                mvn -U -V -e -B -DskipTests deploy --file pom.xml -DmuleDeploy \
-                -Dconn.app.client.id=${{ env.CLOUDHUB_ID}} \
-                -Dconn.app.client.secret=${{ env.CLOUDHUB_SECRET}} \
-                -Dcloudhub.environment=${{ env.CLOUDHUB_ENVIRONMENT}} \
-                -Dcloudhub.workerType=${{ env.CLOUDHUB_WORKER_TYPE}} \
-                -Dcloudhub.workers=${{ env.CLOUDHUB_WORKERS}} \
-                -Dcloudhub.region=${{ env.CLOUDHUB_REGION}} \
+            # # Deploy to CloudHub
+            # - name: Deploy             
+            #   continue-on-error: true
+            #   run: |
+            #     mvn -U -V -e -B -DskipTests deploy --file pom.xml -DmuleDeploy \
+            #     -Dconn.app.client.id=${{ env.CLOUDHUB_ID}} \
+            #     -Dconn.app.client.secret=${{ env.CLOUDHUB_SECRET}} \
+            #     -Dcloudhub.environment=${{ env.CLOUDHUB_ENVIRONMENT}} \
+            #     -Dcloudhub.workerType=${{ env.CLOUDHUB_WORKER_TYPE}} \
+            #     -Dcloudhub.workers=${{ env.CLOUDHUB_WORKERS}} \
+            #     -Dcloudhub.region=${{ env.CLOUDHUB_REGION}} \
