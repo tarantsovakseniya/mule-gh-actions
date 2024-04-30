@@ -4,7 +4,11 @@
 
 	<groupId>com.mycompany</groupId>
 	<artifactId>mule-gh-actions-blog</artifactId>
+<<<<<<< HEAD
 	<version>1.0.5</version>
+=======
+	<version>1.0.6-SNAPSHOT</version>
+>>>>>>> 5b334346d60daa1e70643872e4252a85ee380bfa
 	<packaging>mule-application</packaging>
 
 	<name>mule-gh-actions-blog</name>
