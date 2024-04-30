@@ -68,7 +68,7 @@ jobs:
             # Build next snapshot version.
             - name: Prepare and perform release            
               if: github.event.inputs.release == 'true'
-              run: mvn -B release:prepare release:perform -PgithubDeploy
+              run: mvn -B release:prepare -PgithubDeploy
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
