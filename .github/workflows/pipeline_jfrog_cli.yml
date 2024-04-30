@@ -94,11 +94,7 @@ jobs:
               run: mvn -B release:prepare -PgithubDeploy
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
- 
-            - run: |
-                cd ~/.m2/repository/com/mycompany
-                ls
-                
+
             # # Upload artifact
             - name: Upload artifact to JFrog repository
               run: |
