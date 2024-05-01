@@ -89,7 +89,7 @@ jobs:
             # Replace the snapshot version with a release candidate version.
             - name: Perform release            
               if: github.event.inputs.release == 'true'
-              run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} versions:commit
+              run: mvn versions:set -DremoveSnapshot versions:commit
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -99,13 +99,27 @@ jobs:
                 jf mvn install -DskipTests -PjfrogDeploy
 
             # # Deploy to CloudHub
-            # - name: Deploy             
-            #   continue-on-error: true
-            #   run: |
-            #     mvn -U -V -e -B -DskipTests deploy --file pom.xml -DmuleDeploy \
-            #     -Dconn.app.client.id=${{ env.CLOUDHUB_ID}} \
-            #     -Dconn.app.client.secret=${{ env.CLOUDHUB_SECRET}} \
-            #     -Dcloudhub.environment=${{ env.CLOUDHUB_ENVIRONMENT}} \
-            #     -Dcloudhub.workerType=${{ env.CLOUDHUB_WORKER_TYPE}} \
-            #     -Dcloudhub.workers=${{ env.CLOUDHUB_WORKERS}} \
-            #     -Dcloudhub.region=${{ env.CLOUDHUB_REGION}} \
+            - name: Deploy             
+              continue-on-error: true
+              run: |
+                mvn -U -V -e -B -DskipTests deploy --file pom.xml -DmuleDeploy \
+                -Dconn.app.client.id=${{ env.CLOUDHUB_ID}} \
+                -Dconn.app.client.secret=${{ env.CLOUDHUB_SECRET}} \
+                -Dcloudhub.environment=${{ env.CLOUDHUB_ENVIRONMENT}} \
+                -Dcloudhub.workerType=${{ env.CLOUDHUB_WORKER_TYPE}} \
+                -Dcloudhub.workers=${{ env.CLOUDHUB_WORKERS}} \
+                -Dcloudhub.region=${{ env.CLOUDHUB_REGION}} \
+
+            # Create a SNAPSHOT version
+            - name: Increment SNAPSHOT version   
+              if: github.event.inputs.release == 'true'
+              run: |
+                mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}-SNAPSHOT versions:commit
+
+            - name: Update version in SCM
+              if: github.event.inputs.release == 'true'
+              run: |
+                git commit -am "increment version"
+                git push
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
